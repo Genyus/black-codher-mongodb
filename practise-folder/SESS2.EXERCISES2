@@ -1,0 +1,78 @@
+SESS 2. EXERCISES 2
+
+2)------------------------
+FILTER: 
+ {$and: [ {year: {$gt:1950}}, {year: {$lt:2000}}, {"awards.wins": {$gt:10}} ] }
+PROJECTION:
+ {title: 1, _id: 0}
+LIMIT:
+
+3)----------------------------
+FILTER: 
+ {$or: [ {$and: [ {year: {$gt:1950}}, {year: {$lt:2000}} ] }, {"awards.wins": {$eq:10}} ] }
+PROJECTION:
+ {title: 1, _id: 0}
+LIMIT:
+
+4)-------------------------------
+FILTER: 
+PROJECTION:
+ {title: 1, _id: 0, year:1, "awards.wins": 1}
+LIMIT:
+
+5)---------------------------------
+TERMINAL: 
+  db.film.find({actors: {$size: 2}}).count();
+FILTER: 
+PROJECTION:
+LIMIT:
+
+
+6)----------------------------------
+FILTER: 
+ db.film.find({actors: {$size: 2}}, {title: 1, actors: 1, _id: 0})
+PROJECTION:
+LIMIT:
+
+7)-----------------------------------
+FILTER:  
+ {$and: [{actors: {$size: 2}}, {genres: "Short"}]}
+PROJECTION: 
+ {title: 1, _id: 0, actors:1}
+LIMIT:
+
+----------------------------------------------------------------------
+HOMEWORK- SESSION 2
+----------------------------------------------------------------------
+7. 
+  db.store.find({"type": "fruit"}).count();
+  4
+8. 
+  db.store.find({"type": "vegetable"}).count();
+  3
+9.
+  db.store.find({},{name:1, price:1, _id:0}).pretty();
+10.
+  db.store.find({$or:[{"colour":"red"},{"colour":"orange"}]}).count();
+  4
+11.
+  db.store.find({$and:[{"colour":"red"},{"colour":"green"}]}).count();
+  1
+12.
+  db.store.find({$and:[{"price":{$gt:15}},{"price":{$lt:25}}]}).count();
+  CORRECTION: 
+  db.store.find( { "price" : {"$gt" : 15 , "$lt" : 25 } } ).count()
+  3
+
+  session 3 
+
+  EXERCISE 1
+
+  10. 
+   db.quiz.find({ "feedback": { $exists: true} }).count();
+    7
+  11. 
+    db.quiz.updateMany( {name : "Anna"}, {$unset: { "fedback": ""} }, );
+  13.
+    db.quiz.find({$or: [{score: {$gt: 75}}, {score:"A"}, {score: "A+"}]}).pretty();
+    6
