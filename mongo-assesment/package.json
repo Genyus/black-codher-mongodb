@@ -1,7 +1,6 @@
 {
   "name": "mongo-assesment",
   "version": "1.0.0",
-  "description": "",
   "main": "homework.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -14,5 +13,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }
