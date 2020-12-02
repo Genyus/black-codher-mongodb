@@ -30,26 +30,6 @@ module.exports = {
   initialize,
 };
 
-// << db init >>
-db.initialize(
-  dbName,
-  collectionName,
-  function (dbCollection) {
-    // successCallback
-    // get all items
-    dbCollection.find().toArray(function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    });
-
-    // << db CRUD routes >>
-  },
-  function (err) {
-    // failureCallback
-    throw err;
-  }
-);
-
 // ---------------------------- OLD CODE
 // const express = require("express");
 // const cors = require("cors");
