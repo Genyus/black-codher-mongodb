@@ -47,11 +47,12 @@ db.initialize(
         .find({})
         .skip((pageId - 1) * 10)
         .limit(numItem)
-        .sort({ title: -1 })
+        .sort({ title: 1 }) // this sorts the movies by titles in ascending (A to Z) order
         .toArray((error, result) => {
           if (error) throw error;
+          // ------------------------------- how to make it defensive???
           // if (pageId === 0) {
-          //   console.log("WTF");
+          //   console.log("wrong");
           //   result = {
           //     message: "The pagination numer is incorrect",
           //   };
@@ -63,24 +64,32 @@ db.initialize(
           // }
         });
     });
-  },
-  // part 5 homework------ start work here
-  // server.get(`/film/title?keyword=`, (request, response) => {
-  //   const pageId = request.params.pId;
-  //   const numItem = 10;
-  //   // let query = {};
-  //   // query.skip = (pageId - 1) * 10;
-  //   // query.limit = numItem;
+    // part 5 homework------ start work here
+    server.get("/api/titles/:keyword", (request, response) => {
+      let word = request.params.keyword;
 
-  //   dbCollection
-  //     .find({ $text: { $search: keyword } })
-  //     .toArray((error, result) => {
-  //       if (error) throw error;
-  //       response.json(result);
-  //       // console.log(reults);
-  //       // }
-  //     });
-  // }),
+      dbCollection
+        .find({ $text: { $search: request.params.keyword } })
+        .toArray((error, result) => {
+          if (error) throw error;
+          response.json(result);
+          // console.log(reults);
+        });
+    });
+    // part 6
+    server.get("/api/film/actor", (request, response) => {
+      let actorToFind = request.query.keyword;
+      // url localhost:4000/api/film/actor?keyword=Will+Smith
+
+      dbCollection
+        .find({ actors: { $in: [actorToFind] } })
+        .toArray((error, result) => {
+          if (error) throw error;
+          response.json(result);
+          // console.log(reults);
+        });
+    });
+  },
 
   function (err) {
     // failureCallback
